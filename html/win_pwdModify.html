@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <style>
+        html, body {
+            background-color: #EDEDED !important;
+        }
+        
+        #container{
+        	alignment-adjust: auto;
+        }
+        
+        #container table tr td{
+        	padding:10px 15px;
+        }
+        input{
+        	display:block;
+        }
+        
+        .inputField{
+        	background-color: #FFFFFF;
+        }
+        
+        .btn{
+        	
+        	width:100px;
+        	background-color: #A7A7A7;
+        }
+        
+        
+    </style>
+    
+    
+</head>
+<body>
+	<div id="container">
+		<table>
+			<tr>
+				<td><label>旧密码：</label></td>
+				<td><input class="inputField" type="text" id="old_pwd" name="old_pwd" value=""/></td>
+			</tr>
+			<tr>
+				<td><label>新密码：</label></td>
+				<td><input class="inputField" type="text" id="old_pwd" name="old_pwd" value=""/></td>
+			</tr>
+			
+			<tr>
+				<td><label>重复新密码：</label></td>
+				<td><input class="inputField" type="text" id="old_pwd" name="old_pwd" value=""/></td>
+			</tr>
+			
+			<tr>
+				<td><button class="btn" name="btn_reset" id="btn_reset" onclick="reset()">重置</button></td>
+				<td><button class="btn" name="btn_submit" id="btn_submit" onclick="submit()">确定</button></td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+apiready = function () {
+//  api.setStatusBarStyle({
+//      style: 'dark'
+//  });
+//  $api.fixIos7Bar($api.dom('nav'));
+};
+
+
+function reset(){
+	$("#container input[type='text']").val("");
+}
+
+function submit(){
+	
+}
+</script>
+</html>

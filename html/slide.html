@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>slide</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        * {
+            outline: 0;
+        }
+        /*header*/
+        header .fliter{
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #f2f2f2;
+        }
+
+        .header .fliter{
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;            
+        }
+        .header a{
+            display: block;
+            background-size: 30px;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 20px;
+        }
+        .title {
+            line-height:40px;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            text-align: center;
+        }
+        .header .menu {
+            background-image: url("../image/menu.png");
+        }
+        /*header*/
+       .filterMenu{
+		    display: -webkit-box;
+		    display: -webkit-flex;
+		    display: flex;
+		    -webkit-box-orient: horizontal;
+		    -webkit-flex-direction: row;
+		    flex-direction: row;
+		    background-color: #fff;
+		    -webkit-box-shadow:0px 4px 4px #dddcdc;
+		    box-shadow: 0px 4px 4px #dddcdc; 
+		}
+		
+		.filterMenu li{
+			-webkit-box-flex: 1; 
+    		-webkit-flex: 1;
+    		flex: 1;
+    		height: 40px; 
+    		line-height: 40px;
+		}
+       .filterMenu li.active a{
+   			 color: #55abce;
+		}
+    </style>
+</head>
+<body>
+<header>
+    <div class="index header ">
+        <a class="menu" tapmode="" onclick="sliding()"></a>
+        <div class="title" >
+            APICloud
+        </div>
+        
+        </div>
+       <div class="fliter">
+        	<ul id="filterMenu" class="filterMenu">
+	        	<li><a tapmode="" onclick="showFileterSearch(this,'grade')" class="menuItem"><i></i><span>选择科目</span></a></li>
+	            <li><a tapmode="" onclick="showFileterSearch(this,'subject')" class="menuItem"><i></i><span>选择年级</span></a></li>
+	            <li><a tapmode="" onclick="showFileterSearch(this,'autosort')" class="menuItem"><i></i><span>智能排序</span></a></li>
+       		</ul>
+        </div> 
+</header>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+    function sliding() {
+        api.openSlidPane({type: 'left'});
+    }
+    apiready = function () {
+	    $api.fixIos7Bar($api.dom('.title'));
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+            api.closeWidget();
+        });
+        
+        //
+        
+        
+	};
+	
+	function showFileterSearch(obj,filterType){
+		//alert(filterType);
+	api.openFrameGroup ({
+    name: 'group1',
+    background:'#fff',
+    scrollEnabled:false,
+    rect:{x:0, y:0, w:'auto', h:'auto'},
+    index:1,
+    frames:
+    [{
+        name: 'frame1', 
+        url: 'frame1.html', 
+        pageParam:{}, 
+        bounces:true,
+        bgColor: '#fff', 
+        vScrollBarEnabled:true,
+        hScrollBarEnabled:false
+    },{
+        name: 'frame2', 
+        url: 'frame2.html', 
+        pageParam:{}, 
+        bounces:true,
+        bgColor: '#fff', 
+        vScrollBarEnabled:true,
+        hScrollBarEnabled:false
+    }]
+}, function(ret, err){
+    var name = ret.name;
+    var index = ret.index;
+});
+
+	}
+	
+</script>
+</body>
+</html>

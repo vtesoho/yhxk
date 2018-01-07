@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #FFFFFF;
+    font-weight: lighter
+}
+
+img {
+    width: 100%;
+}
+.title {
+    border-bottom: 1px solid #EDEDED;
+}
+
+.title span {
+    color: #A4A4A4;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.title span:first-child {
+    color: #000000;
+    font-size: 15px;
+}
+
+
+.price {
+    margin: 5px 0;
+    line-height: 20px;
+    font-size: 13px;
+}
+
+.price div, .price-text {
+    color: #f99d1c;
+    font-size: 14px;
+}
+
+.price-text {
+    font-size: 16px;
+}
+
+.arrow-right {
+    background-image: url("../image/arrow_grey_right_normal.png");
+    background-position: right center;
+    background-repeat: no-repeat no-repeat;
+    background-size: 20px;
+    border-bottom: 1px solid #d8d8d8;
+    padding: 10px 0;
+}
+
+  
+
+.showTeacherHeader
+{
+display: -webkit-box;
+-webkit-box-pack: center;
+-webkit-box-align: center;
+padding:10px 5px 10px 5px;/*设置文字到div边框的距离*/
+overflow:hidden;
+border-bottom: 1px solid #d8d8d8;
+background-color: #FFFFFF
+
+}
+
+/*设置头像以圆形的方式显示*/
+.showTeacherHeader  div:first-child{
+display:inline-block;
+margin:5px auto;
+width:80px;
+height:80px;
+border-radius:100px;
+/*overflow:hidden;手机上无法显示*/
+position: relative
+}
+.showTeacherHeader img
+{
+ width:100%;
+ min-height:100%; text-align:center;
+}
+
+.teacherInfo {
+    margin-left: 40px/*设置此div距离左边元素的距离*/
+}
+
+.teacherInfo span {
+    color: #A4A4A4;
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom:5px
+}
+
+.teacherInfo span:first-child {/*设置此div内标签第一个span中文字的样式*/
+    color: #000000;
+    font-size: 15px;
+}
+
+
+.attention
+{
+    width: 99%; height: 25px;background-position-y: 4px; background-size: 30px;  font-size: 15px;
+    color:#00FF00;
+    margin-left:15px;
+    background-color: #FFFFFF;
+    border: thin solid #00FF00;
+    font-weight: 100
+}
+
+
+.btnBuyCourse
+{
+    width: 99%; height: 35px;background-position-y: 4px; background-size: 30px;  font-size: 15px;
+    color:#FFFFFF;
+    margin-left:15px;
+    background-color: #FF7F00;
+}
+
+
+.teacherInfoOne
+{
+display: -webkit-box;
+-webkit-box-pack: center;
+-webkit-box-align: center;
+margin:10px 5px;
+overflow:hidden;
+background-color: #FFFFFF;
+border-top: 1px solid #d8d8d8;
+border-bottom: 1px solid #d8d8d8;
+padding:10px 5px 10px 0px/*设置文字到div边框的距离*/
+}
+
+.teacherInfoOne div:first-child span{
+    margin-bottom:5px
+}
+
+.wayShow
+{
+    color: #A4A4A4;
+    font-size: 12px;
+}
+
+.showExperience
+{
+border-top: 1px solid #d8d8d8;
+border-bottom: 1px solid #d8d8d8;
+border-left: 1px solid #d8d8d8;
+border-right: 1px solid #d8d8d8;
+width:350px;
+height:auto;
+min-height:80px; max-height:160px;
+overflow:scroll;/*多出的文字部分滚动*/
+padding:10px 5px 10px 5px;
+margin:0 auto
+}
+
+.showEstimate ul li
+{
+  padding:10px 5px 10px 5px;/*设置文字到div边框的距离*/
+  border-bottom:1px solid #d8d8d8;
+}
+</style>
+<body>
+
+
+<div class="showTeacherHeader">
+	<div>
+	<!--圆形头像的更换-->
+	<img src="../image/a9867683-e24c-4082-bd11-a6799fe1b797.png">
+	<!--已认证的显示-->
+	<span style="position: absolute; bottom:0; right:0; background-color: #00FF00;color:#FFFFFF;font-weight:100;font-size:10px">已认证</span>
+	</div>
+	 <div class="teacherInfo">
+	        <span>何子月</span>
+	        <span>在校大学生</span>
+	        <span><button class="attention" onclick="getAttention()">+关注</button></span> 
+	        <br />
+	        <span>华中科技大学计算机系2014级</span>
+	        <br />
+	        <span>教授科目：高中数学、高中物理</span>
+	  </div>
+
+ </div>  
+ 
+ 
+ <div class="teacherInfoOne">
+     <div>
+	 <span>在线授课:</span>
+	 <span style="color: #FF7F00">15元/题</span>
+	 <br />
+	 <span class="wayShow">通过图片、文字、语音进行在线讲解</span>
+	 <br />
+	 <span>908人购买 </span>
+	 <span>用户评价:4.8</span>
+	 </div>
+	 <div>
+	 <button class="btnBuyCourse" onclick="openPayWay()">购买</button>
+	 </div>
+ </div>  
+ 
+ <div class="showExperience">
+	 主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助主要教授高中数学，高中物理，曾是市高考状元，对高考有经验，希望对你有所帮助
+ </div> 
+
+<div class="showEstimate">
+    <ul>
+        <li class="arrow-right" onclick="getUserEstimateList()">
+            <span>用户评价</span>
+        </li>
+        <li>
+            <span>136*****692       综合评分  <font color="#FF7F00">5.0</font></span>
+            <br />
+            <span>非常细心的老师，知道我的错误在哪！经过老师细心的讲解，终于明白了！</span>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+    };
+    function getAttention() {
+        alert("关注成功");
+    }
+    function getUserEstimateList()
+    {
+       alert("获取用户评价列表");
+       api.openWin({
+            name: "studentsEstimateList",
+            url: 'studentsEstimateList.html'
+        })
+    }
+    function openPayWay()
+    {
+       api.openWin({
+            name: "studentsPayWayList",
+            url: 'studentsPayWayList.html'
+        })
+    }
+</script>
+</html>

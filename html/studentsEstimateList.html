@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+    body {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        background-color:  #F5F5F5
+    }
+
+    .content {
+        -webkit-box-flex: 1;
+    }
+    
+    .header
+    {
+     background-color:  #F5F5F5
+    }
+
+.header div:last-child
+	 {
+	     margin-right: 10px;
+	 }   
+  
+
+
+.showTeacherHeader
+{
+display: -webkit-box;
+-webkit-box-pack: center;
+-webkit-box-align: center;
+padding:10px 5px 10px 5px;/*设置文字到div边框的距离*/
+overflow:hidden;
+background-color: #FFFFFF;
+margin-bottom:20px
+}
+
+/*设置头像以圆形的方式显示*/
+.showTeacherHeader figure div{
+display:inline-block;
+margin:5px auto;
+width:80px;
+height:80px;
+border-radius:100px;
+overflow:hidden;
+}
+.showTeacherHeader img{width:100%;
+min-height:100%; text-align:center;}
+
+.teacherInfo {
+    background-color: #FFFFFF;
+    margin-left: 40px/*设置此div距离左边元素的距离*/
+}
+
+.teacherInfo span {
+    color: #A4A4A4;
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom:5px
+}
+
+.teacherInfo span:first-child {/*设置此div内标签第一个span中文字的样式*/
+    color: #000000;
+    font-size: 15px;
+}
+.userEstimate
+{
+  padding:10px 5px 10px 5px;/*设置文字到div边框的距离*/
+  background-color: #FFFFFF;
+}
+
+ .messageNumber 
+ {
+  position: absolute; top:1; right:1; background-color: red;color:#FFFFFF;font-weight:100;font-size:10px;
+  width:10px;
+  height:10px;
+  display:inline-block;
+  border-radius:100px;
+  text-align:center;
+ }
+
+</style>
+<body>
+<header>
+    <div class="header">
+        <div class="back btn" tapmode="" onclick="api.closeWin()"></div>
+        <div class="title" id="title">评价列表</div>
+         <div class="bell btn" tapmode="" onclick="openMessageCenter()">
+        <span class="messageNumber">1</span>
+        </div>
+    </div>
+    <div class="showTeacherHeader">
+	 <figure>
+	<div>
+	<!--圆形头像的更换-->
+	<img src="../image/a9867683-e24c-4082-bd11-a6799fe1b797.png">
+	</div>  
+	</figure>
+	 <div class="teacherInfo">
+	        <span>何子月</span>
+	        <span>在校大学生</span>
+	        <br />
+	        <span>华中科技大学计算机系2014级</span>
+	        <br />
+	        <span>综合评分:</span><span style="color: #FF7F00">4.8</span>
+	        <span>推荐指数:</span><span style="color: #FF7F00">98</span>
+	  </div>
+    </div> 
+    <div class="userEstimate">
+    <span>评论列表</span>
+    </div>
+</header>
+<div class="content">
+</div>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+        fixIos7Bar($("header"));
+        var $bodyH = $("body").height();
+        var $headerH = $("header").height();
+        var $footerH = $("footer").height();
+        var $contentH = $bodyH - $headerH - $footerH;
+        api.openFrame({
+            name: 'studentsEstimateListContent',
+            url: 'studentsEstimateListContent.html',
+            rect: {
+                x: 0,
+                y: $headerH,
+                w: 'auto',
+                h: $contentH
+            },
+            bgColor: '#E5E5E5'
+        })
+    }
+	function openMessageCenter() {
+        api.openWin({
+       name: 'studentMessageCenter',
+       url: 'studentMessageCenter.html',
+       pageParam: {},
+       bounces: false,
+       opaque: false
+     });
+    }
+</script>
+</body>
+</html>

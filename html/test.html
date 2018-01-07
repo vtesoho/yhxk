@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="" />
+		<title></title>
+		 <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+	</head>
+	<body>
+		<input id="queryBtn" name="queryBtn" onclick="queryData()"/>
+		<input id="queryBtn" name="insertBtn" onclick="insertData()"/>
+		<input id="queryBtn" name="updateBtn" onclick="updateData()"/>
+	</body> 
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+
+
+
+apiready = function () {
+alert("test");
+    api.setStatusBarStyle({
+        style: 'dark'
+    });
+    $api.fixIos7Bar($api.dom('nav'));
+    var obj = api.require('mediaScanner');
+	alert(obj);
+    
+};
+</script>
+</html>

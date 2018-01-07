@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        body {
+            background-color: #fff;
+            padding: 10px 5px;
+        }
+		#review-menu{
+			background-color:#EFEFEF;
+			width:100%;
+			height:40%;
+			margin:0 auto;
+			padding:5px;
+		}
+		
+		.menu-item{
+			min-height: 40px;
+			margin:5px;
+			background-color:#fff;
+			line-height: 40px;
+			padding-left:25px;
+			background-image: url("../image/arrow_grey_right_normal.png");
+			background-repeat: no-repeat;
+        	background-position: 60%;
+		}
+		#reivew-rules{
+			padding:5px;
+			margin-top:20px;
+		}
+		
+		#reivew-rules h2{
+			color:#8978B4;
+			padding:5px;
+		}
+		
+		#reivew-rules ul{
+			display:block;
+		}
+		#reivew-rules ul li{
+			padding:5px;
+		}
+		
+    </style>
+</head>
+<body>
+	<div id="review-menu">
+		<div class="menu-item" onclick="checkReviews('receive')">
+			<img src="../image/teacher_receive_review_icon.png"/>
+			<span>我收到的评论</span>
+		</div>
+		<div class="menu-item" onclick="checkReviews('send')">
+			<img src="../image/teacher_send_review_icon.png"/>
+			<span>我收到的评论</span>
+		</div>
+	</div>
+	
+	<div id="reivew-rules">
+		<h2>评价规则</h2>
+		<ul>
+			<li><p>1 可以向老师提问，并且可以随时拨打老师电话</p></li>
+			<li><p>2 可以向老师提问，但是不可以随时拨打老师电话</p></li>
+			<li><p>3 可以向老师提问，并且可以随时拨打老师电话</p></li>
+			<li><p>4 可以向老师提问，但是不可以随时拨打老师电话</p></li>
+			<li><p>5 可以向老师提问，并且可以随时拨打老师电话</p></li>
+			<li><p>6 可以向老师提问，但是不可以随时拨打老师电话</p></li>
+		</ul>
+	</div>
+<script type="text/javascript" src="../script/api.js"></script>		
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+//      api.setRefreshHeaderInfo({
+//          visible: true,
+//          bgColor: '#E5E5E5',
+//          textColor: '#fff',
+//          textDown: '下拉刷新...',
+//          textUp: '松开刷新...',
+//          showTime: true
+//      }, function (ret, err) {
+//          api.refreshHeaderLoadDone();
+//      });
+//		var $issueHeader=$api.byId('issue_header');
+//		var $body=$api.dom('body');
+//		var body_h=$api.offset($body).h;
+//		alert("body:"+body_h);
+//      var issue_h = $api.offset($issueHeader).h;
+//      var header_h=$api.getStorage('header_h');
+//      alert("h1"+header_h);
+//      var footer_h=$api.getStorage('footer_h');
+//  
+//      var content_h = body_h - issue_h;
+//     
+//      api.openFrame({
+//	        name: 'teacher_issue_list',
+//	        url: 'frm_teacher_issues_content.html',
+//	        bounces: false,
+//	        rect: {
+//		        x:0,
+//		        y:issue_h+header_h,
+//		        w:'auto',
+//		        h:'auto'
+//	        }
+//      });  
+    };
+    
+    function checkReviews(type){
+    	alert(type);
+    }
+</script>
+</body>
+</html>

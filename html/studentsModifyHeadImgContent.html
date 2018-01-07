@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #F5F5F5;
+    font-weight: lighter
+}
+
+img {
+    width: 100%;
+}
+
+.btnStyle
+{
+    width: 80%; height: 40px;background-position-y: 4px; background-size: 30px;  font-size: 20px;
+    color:#FFFFFF;
+    background-color: #FF7F00;
+}
+
+
+.headImgInfo
+{
+  margin-top: 40px;
+  text-align: center;
+}
+
+.headImgInfo div
+{
+  margin-bottom: 25px;  
+}
+</style>
+<body>
+<div class="headImgInfo">
+      <div class="headImgStyle"><input type="file" id="headImg"></div>
+      <div class="modifyBtn"><button class="btnStyle" onclick="modifyheadImg()">上传</button></div>
+</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function ()
+     {
+    };
+    function modifyheadImg()
+    {
+       alert("修改成功");
+    }
+</script>
+</html>

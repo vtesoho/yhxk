@@ -1,0 +1,181 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>api</title> 
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.4.min.css" />
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.mobile-1.4.4.min.js"></script>
+</head> 
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <a data-role="button" onclick="api.closeWin()" data-icon="Back">返回</a>
+            <h1>api</h1>            
+        </div><!-- /header -->
+        <div data-role="content">
+            <a data-role="button" onclick="actionSheet()">actionSheet</a>
+            <a data-role="button" onclick="getPicture()">getPicture</a>
+            <a data-role="button" onclick="animation()">animation</a>
+            <a data-role="button" onclick="call()">call</a>
+            <a data-role="button" onclick="clearCache()">clearCache</a>
+            <a data-role="button" onclick="getLocation()">getLocation</a>
+            <a data-role="button" onclick="mail()">mail</a>
+            <a data-role="button" onclick="openContacts()">openContacts</a>
+            
+            
+            
+        </div><!-- /content -->
+        <div data-role="footer">
+            <h4>/html/api.html</h4>
+        </div><!-- /footer -->
+    </div><!-- /page -->
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+ function actionSheet(){
+    api.actionSheet({
+        title: '底部弹出框测试',
+        cancelTitle: '这里是取消按钮',
+        destructiveTitle: '红色警告按钮',
+        buttons: ['1','2','3']
+    },function(ret,err){
+        api.alert({
+            msg: '你刚点击了'+ret.buttonIndex
+        });
+    });
+ }
+ 
+// function addEventListener(){
+//  api.addEventListener({
+//      name: 'online'
+//  }, function(ret, err){
+//      api.alert({msg: '已联网'});
+//  });
+// }
+ 
+ function getPicture(){
+    api.getPicture({
+        sourceType: 'camera',
+        encodingType: 'png',
+        mediaValue: 'pic',
+        destinationType: 'url',
+        allowEdit: true,
+        quality: 50,
+        targetWidth:100,
+        targetHeight:100,
+        saveToPhotoAlbum: false
+    }, function(ret, err){ 
+        if (ret) {
+            api.alert({msg:ret.data});
+        } else{
+            api.alert({msg:err.msg});
+        };
+    });
+ }
+ 
+ function animation(){
+     api.animation ({
+        name: 'api',
+        delay: 1000,
+        duration: 3000,
+        curve: 'easeIn',
+        repeatCount: 2,
+        autoreverse: true,
+        alpha: 0.6,
+        translation:{
+            x: 0,
+            y: 100,
+            z: 0
+        }, 
+        scale:{
+            x: 1.2,
+            y: 1,
+            z: 1
+        },
+        rotation:{
+            degree:45,
+            x: 0,
+            y: 0,
+            z: 1
+        }
+    }, function() {
+        api.alert({msg: '动画结束'});
+    });
+ }
+ 
+ function call(){
+    api.call({
+        type: 'tel_prompt',
+        number: '10010'
+    });
+ }
+ 
+ function clearCache(){
+    api.alert({
+        title: 'testtitle',
+        msg: 'testmsg',
+        buttons:[ '确定清除cache？']
+    },function(ret,err){
+        if(ret.buttonIndex == 1){
+            api.alert({msg: '开始清除cache'});
+            api.clearCache();
+        }
+    });
+ }
+ 
+ function getLocation(){
+     api.getLocation(
+        function(ret, err){
+            if(ret.status){
+                var lat = ret.latitude;
+                var lon = ret.longitude;
+                var t = ret.timestamp; 
+                var str = '经度：'+ lon +'<br>';
+                str += '纬度：'+ lat +'<br>';
+                str += '更新时间：'+ t +'<br>';
+            } else{
+                api.alert({msg:err.msg});
+            }
+        }
+    );
+ }
+ 
+ function mail(){
+    var recip = '376912651@qq.com';
+    var sub = '邮件测试';
+    var body = '这是一封测试用的邮件';
+    var attach = 'widget://a.txt';
+    api.mail({
+        recipients: [recip],
+        subject: sub,
+        body: body,
+        attachments: [attach]
+    }, function(ret, err){
+        if(ret.status){
+            api.alert({
+                msg: '发送成功'
+            });
+        } else{
+            api.alert({
+                msg: '发送失败'
+            });
+        }
+    });
+ }
+ 
+ function openContacts(){
+    api.openContacts(
+    function(ret,err){
+        if(ret.status){
+            var msg = '姓名:'+ret.name+'--电话:'+ret.phone;
+            api.alert({msg:msg});
+        }else{
+            api.alert({msg:err.msg});
+        };            
+    }
+);
+ }
+</script>   
+</body>
+</html>

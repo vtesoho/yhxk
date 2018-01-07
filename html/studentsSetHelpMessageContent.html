@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #F5F5F5;
+    font-weight: lighter
+}
+
+img {
+    width: 100%;
+}
+
+.arrow-right {
+    background-image: url("../image/arrow_grey_right_normal.png");
+    background-position: right center;
+    background-repeat: no-repeat no-repeat;
+    background-size: 20px;
+    border-bottom: 1px solid #d8d8d8;
+    padding-left: 15px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.showHelpSet
+{
+margin-top: 20px;
+}
+</style>
+<body>
+<div class="showHelpSet">
+    <ul>
+        <li class="arrow-right" onclick="modifyHeadImg()">
+                             修改头像
+        </li>
+         <li class="arrow-right" onclick="modifyFalseName()">
+                             修改昵称
+        </li>
+        <li class="arrow-right" onclick="modifyLoginPwd()">
+                             修改登录密码
+        </li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function ()
+     {
+    };
+    function modifyHeadImg()
+    {
+       alert("修改用户头像");
+       api.openWin({
+            name: "studentsModifyHeadImg",
+            url: 'studentsModifyHeadImg.html'
+        })
+    }
+    
+     function modifyFalseName()
+    {
+       alert("修改用户昵称");
+       api.openWin({
+            name: "studentsModifyFalseName",
+            url: 'studentsModifyFalseName.html'
+        })
+    }
+    
+     function modifyLoginPwd()
+    {
+       alert("修改登录密码");
+       api.openWin({
+            name: "studentsModifyLoginPwd",
+            url: 'studentsModifyLoginPwd.html'
+        })
+    }
+   
+</script>
+</html>

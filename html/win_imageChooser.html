@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <style>
+        html, body {
+            background-color: #dfdede !important;
+        }
+    </style>
+</head>
+<body>
+  <nav></nav>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+window.apiready = function () {
+    api.setStatusBarStyle({
+        style: 'dark'
+    });
+    $api.fixIos7Bar($api.dom('nav'));
+    var obj = api.require('UIMediaScanner'); 	
+	 	obj.open({
+	 		column:4,
+	 		sort:{
+	 			key:'time',
+	 			order:'desc'
+	 		},
+	 		texts:{
+	 			stateText:'已选*项',
+	 			cancelText:'取消',
+	 			finishText:'完成'
+	 		},
+	 		styles:{
+	 			bg:'#fff',
+	 			mark:{
+	 				icon:'',
+	 				position:'bottom_left',
+	 				size:20
+	 			},
+	 			nav:{
+	 				bg:'#eee',
+	 				stateColor:'#000',
+	 				stateSize:18,
+	 				cancleBg: 'rgba(0,0,0,0)',
+	            cancelColor: '#000',
+	            cancelSize: 18,
+	            finishBg: 'rgba(0,0,0,0)',
+	            finishColor: '#000',
+	            finishSize: 18
+	 			}
+	 		}
+	 	},function(ret){
+	 		if(ret){
+	 			alert(JSON.stringify(ret.list));
+	 		}
+	 	});
+};
+</script>
+</html>

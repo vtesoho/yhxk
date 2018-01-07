@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #F5F5F5;
+    font-weight: lighter
+}
+img {
+    width: 100%;
+}
+
+.payInfo
+{
+  background-color: #FFFFFF;
+  padding:10px 5px 10px 5px;/*设置文字到div边框的距离*/
+  margin-left:15px;
+  margin-top:20px;
+  margin-right:15px;
+}
+
+.payInfo span
+{
+  margin-right:35px;
+}
+
+
+.payChooseInfo
+{
+   padding:10px 5px 10px 20px;/*设置文字到div边框的距离*/
+   margin-top:10px;
+   margin-bottom:10px
+}
+
+.payWay
+{
+  background-color: #FFFFFF;
+  padding:10px 5px 10px 5px;/*设置文字到div边框的距离*/
+  margin-left:15px;
+  margin-right:15px;
+}
+
+.btnPay
+{
+    width: 99%; height: 43px;background-position-y: 4px; background-size: 30px;  font-size: 20px;
+    color:#FFFFFF;
+    background-color: #FF7F00;
+}
+
+</style>
+<body>
+<div class="payInfo">
+<span>何子月      -在线授课</span>
+<span style="color: #FF7F00">15元/题</span> 	
+</div>
+<div class="payChooseInfo">
+<span>  选择支付方式</span>
+</div>
+
+<div class="payWay">
+ <span><input type="radio" name="payMoney" id="zhifubaopay" value="zhifubaopay" checked="true"/> 支付宝支付</span><br /><br />
+<span><input type="radio" name="payMoney" id="weixinpay" value="weixinpay"/> 微信支付</span><br /><br />
+<span><input type="radio" name="payMoney" id="bankcardpay" value="bankcardpay"/> 银行卡支付</span>
+</div>
+
+<div class="payInfo">
+   <button class="btnPay" onclick="payMoney()">立即购买</button>
+</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function ()
+     {
+    };
+    function payMoney()
+    {
+      var payMoney=document.getElementsByName("payMoney");
+      var payWay="";
+      for(var i=0;i<payMoney.length;i++)
+      {
+		if(payMoney[i].checked==true){
+		payWay=payMoney[i].value;
+		break;
+		}
+	  }
+	  if(payWay=="zhifubaopay")
+	  {
+	     alert("支付宝");
+	     var iaf = api.require('aliPay');
+	     alert("支付宝");
+	     iaf.pay({
+	        partner: '2088021153211554',
+	        seller: '2088021153211554',
+	        rsaPriKey: 'MIICXAIBAAKBgQCtjMmFmDBCM6NHDK8Acygmb93pzdvNjnxm2i6tkJqCn6QH7nm0OvLpBtCEL8Y7dtSCAuotB1MNix+dV1IoXAnFOwBX2wMbhdhmXE06B5smzjU3IVg6Jd4VDgQSbmBGA1h5zgJvHU3pHBzj6v4tg2epcfCi1GsAQ6CL24rf8vMt7wIDAQABAoGATnQIXWYQ2rxxIRswuSlVixqi3KB8ro2s2unik/98eXQlOJirV7gWOxUjib33BMaRBjy/E5/uAX9UyVHCCBCjMVDiEDJUjdH0f/LpHpc6byWJAmdxr09XVz/5vj0XSR0hfabALtoT57jct04bqm4T9uUh5ptPN40Lg2456sTxZ7ECQQDbj9HW1snXvll8WZmmkjToPbDQRJePmpwrB04uwY9q2e0uZIgce24mvtxoTOAqkft/6LLa9HRLQbquC3KYUAQLAkEAyloiQrF+ZtyzGWw5s/aE2TGt9T0fedicnV3Nx/IHUR0s057Aq1It+i9rA4onS0PK73L3whwnYtGrgUUS+npoLQJAbDD0b+8rSvprUhE8243UMFSl2hrSrFq9dZ6F8hhDOZ3leCTlxVM1NjZ6mZK4K4H/8kmSSL6Ix8S93qGZeGCFfQJAawTym71N8c8FtgtkFUbrCgfZThuumv2yDxR+ciISNpcsjxumILXM9UXA3lVh5M+M88klOfcz6XKktzC2Ed1NXQJBALgY88mDgKrEFbjwPm6OHkTHPHgBC/lHoRs2uVzsjlH5winJh09orc73sUEs5z2qM8Ihn6CFNjWmKncqGRM146w=',
+	        rsaPubKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtjMmFmDBCM6NHDK8Acygmb93pzdvNjnxm2i6tkJqCn6QH7nm0OvLpBtCEL8Y7dtSCAuotB1MNix+dV1IoXAnFOwBX2wMbhdhmXE06B5smzjU3IVg6Jd4VDgQSbmBGA1h5zgJvHU3pHBzj6v4tg2epcfCi1GsAQ6CL24rf8vMt7wIDAQAB',
+	        subject: '支付宝支付电脑',
+	        body: '电脑交易',
+	        amount: '1',
+	        tradeNO: '4563548735674',
+	        notifyURL: 'http://www.apicloud.com'
+	    }, function(ret, err) {
+	        api.alert({
+	            title: '支付结果',
+	            msg: ret.statusMessage,
+	            buttons: ['确定']
+	        });
+	    });
+	  }
+      alert(payWay);
+      alert("准备支付");
+    }
+    
+</script>
+</html>

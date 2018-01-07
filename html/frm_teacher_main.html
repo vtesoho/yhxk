@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<body>
+
+</body>
+<script>
+    apiready = function () {
+        var headerH = 41, systemType = api.systemType, systemVersion = api.systemVersion;
+        if (api.systemType == 'ios' && parseInt(systemVersion, 10) >= 7) {
+            headerH += 20;
+        }
+        api.openFrame({
+            name: 'frm_teacher_tab',
+            url: 'frm_teacher_tab.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: headerH,
+                w: 'auto',
+                h: 'auto'//toursList_tab.html页面高度
+            }
+        });
+        api.openFrame({
+            name: 'frm_teacher_content',
+            url: 'frm_teacherList.html',
+            rect: {
+                x: 0,
+                y: headerH + 37,
+                w: 'auto',
+                h: 'auto'
+            }
+        });
+    }
+</script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+</html>

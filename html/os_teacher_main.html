@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #wrap {
+            height: 100%;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+        }
+
+        #main {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        #footer {
+            width: 100%;
+            text-align: center;
+            height: 56px;
+            line-height: 55px;
+            background-color: #f2f2f2;
+        }
+
+        ul {
+
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+        }
+
+        .issue {
+            background-image: url(image/teacher_issue_icon_normal.png);
+        }
+
+        .review {
+            background-image: url(image/teacher_review_icon_normal.png));
+        }
+
+        .personal {
+            background-image: url(image/teacher_personal_icon_normal.png));
+        }
+
+        #footer li {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            height: 55px;
+        }
+
+        .bottom_btn {
+            background-position-y: 4px;
+            padding-top: 16px;
+            font-size: 12px;
+            color: #323237;
+            width: 99%;
+            height: 39px;
+            background-repeat: no-repeat no-repeat;
+            background-position-x: center;
+            background-size: 30px;
+        }
+
+        .active .issue {
+            background-image: url(image/teacher_issue_icon_normal.png);
+        }
+
+        .active .review {
+            background-image: url(image/teacher_review_icon_normal.png);
+        }
+
+        .active .personal {
+            background-image: url(image/teacher_person_icon_normal.png);
+        }
+
+        .active .bottom_btn {
+            color: #6ab494;
+            background-size: 30px;
+        }
+
+        .topbar {
+            background: #f2f2f2;
+            height: 50px;
+            border-bottom: 1px solid #DDDFE3;
+            line-height: 50px;
+            text-align: center;
+            display: none;
+            color: #323237;
+        }
+
+        .activebar {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <header>
+        <div id="issue" class="topbar  activebar">
+            问答
+        </div>
+        <div id="review" class="topbar  ">
+           评论
+        </div>
+        <div id="personal" class="topbar ">
+            我的
+   </div>
+    </header>
+    <div id="main">
+
+    </div>
+    <div id="footer">
+        <ul>
+            <li tapmode="active" class="active issue" onclick="randomSwitchBtn(this,'issue',0)">
+                <a class="bottom_btn issue">问答</a>
+            </li>
+
+            <li tapmode="active" onclick="randomSwitchBtn(this,'review',1)">
+                <a class="bottom_btn review">评论</a>
+            </li>
+
+            <li tapmode="active" onclick="randomSwitchBtn(this,'personal',2)">
+                <a class="bottom_btn personal">我的</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        var $header = $api.dom('header');
+        $api.fixIos7Bar($header);
+        var $body = $api.dom('body');
+        var $footer = $api.byId('footer');
+        var header_h = $api.offset($header).h;
+        var body_h = $api.offset($body).h;
+        var footer_h = $api.offset($footer).h;
+        var rect_h = body_h - header_h - footer_h;
+        $api.setStorage('header_h',header_h);
+		$api.setStorage('footer_h',footer_h);
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {x: 0, y: header_h, w: 'auto', h: rect_h},
+            index: 0,
+            frames: [
+                {
+                    name: 'teacher_issues',
+                    url: 'html/frm_teacher_issues.html'
+                },
+                {
+                    name: 'teacher_reviews',
+                    url: 'html/frm_teacher_reviews.html'
+                },
+                {
+                    name: 'teacher_personal',
+                    url: 'html/frm_teacher_personal.html'
+                }
+            ]
+        }, function (ret, err) {
+        });
+
+    }
+    // 随意切换按钮
+    function randomSwitchBtn(obj, name, index) {
+        var $header = $api.dom('header');
+        var $titleBar = $api.domAll($header, '.topbar');
+        for (var i = 0; i < $titleBar.length; i++) {
+            $api.removeCls($titleBar[i], 'activebar');
+        }
+        $api.addCls($api.byId(name), 'activebar');
+        var $footer = $api.byId('footer');
+        var $footerBar = $api.domAll($footer, 'li');
+        for (var j = 0; j < $footerBar.length; j++) {
+            $api.removeCls($footerBar[j], 'active');
+        }
+        $api.addCls(obj, 'active');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+
+    }
+</script>
+</html>

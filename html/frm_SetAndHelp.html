@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <style>
+        html, body {
+            background-color: #EDEDED  !important;
+        }
+        
+        
+        li{
+        	padding: 5px 10px;
+            border-bottom: 1px solid #E0E0E0;
+            background-size:10px;
+            background-repeat: no-repeat;
+          	background-position: 50%;
+        }
+        
+        .liActive {
+            background-color: #A7A7A7;
+        }
+        
+        li.arrowDown{
+        	background-image:url("../image/");
+        }
+        
+        li.arrowUp{
+        	background-image: url("../image/arrow_grey_right_normal.png");
+        }
+        
+        .menu-item {
+            background-image: url("../image/arrow_grey_right_normal.png");
+        }
+        
+        
+        li div{
+        	display:block;
+        	background-size: 20px;
+        	background-repeat: no-repeat;
+        	background-position: left;
+        	padding: 5px 30px;
+        }
+        
+    </style>
+</head>
+<body>
+<nav>
+    <div>
+    	<ul>
+    		<li class="arrowDown" tapmode="liActive" onclick="openDialog(this,1)"><div class="menu-item">修改头像</div></li>
+    		<li class="arrowDown" tapmode="liActive" onclick="openDialog(this,2)"><div class="menu-item">修改昵称</div></li>
+    		<li class="arrowDown" tapmode="liActive" onclick="openDialog(this,3)"><div class="menu-item">修改登陆密码</div></li>
+    	</ul>
+    </div>
+</nav>
+</body>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+apiready = function () {
+	//alert("begin");
+    api.setStatusBarStyle({
+        style: 'dark'
+    });
+    $api.fixIos7Bar($api.dom('nav'));
+//  var obj = api.require('UIMediaScanner');
+//	alert(obj);
+};
+
+function openDialog(domObj,index){
+	 $(domObj).addClass('liActive').toggleClass('arrowUp');
+	 $('li').not($(domObj)).removeClass('liActive arrowUp');
+	 if(index==1){
+	 
+//	 	api.openWin({
+//	         name: 'imageChooserWin',
+//	         url: 'win_imageChooser.html'
+//       });
+	 	var obj = api.require('mediaScanner');
+	 	alert(obj);
+	 	
+	 	obj.open({
+	 		column:4,
+	 		sort:{
+	 			key:'time',
+	 			order:'desc'
+	 		},
+	 		texts:{
+	 			stateText:'已选*项',
+	 			cancelText:'取消',
+	 			finishText:'完成'
+	 		},
+	 		styles:{
+	 			bg:'#fff',
+	 			mark:{
+	 				icon:'',
+	 				position:'bottom_left',
+	 				size:20
+	 			},
+	 			nav:{
+	 				bg:'#eee',
+	 				stateColor:'#000',
+	 				stateSize:18,
+	 				cancleBg: 'rgba(0,0,0,0)',
+	            cancelColor: '#000',
+	            cancelSize: 18,
+	            finishBg: 'rgba(0,0,0,0)',
+	            finishColor: '#000',
+	            finishSize: 18
+	 			}
+	 		}
+	 	},function(ret){
+	 		if(ret){
+	 			alert(JSON.stringify(ret.list));
+	 		}
+	 	});
+		obj.scan({
+		    type: 'all',
+		    count: 10,
+		    sort: {
+		        key: 'time',
+		        order: 'desc'
+		    }
+		}, function(ret){
+		    if(ret){
+		        alert(JSON.stringify(ret.list));
+		    }
+		});
+		api.addEventListener({
+		    name: 'scrolltobottom'
+		}, function(){
+		    obj.fetch(function(ret){
+		        alert(JSON.stringify(ret.list));
+		    });
+		});
+	 }else if(index==2){
+	 	api.openWin({
+	         name: 'pwdMoidfyWin',
+	         url: 'win_pwdModify.html'
+        });
+	 }else if(index==3){
+	 	api.openWin({
+	         name: 'nicknameMoidfyWin',
+	         url: 'win_nicknameModify.html'
+        });
+	 }	 
+}
+</script>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--初始化页面，这个页面是用户没登录的时候显示的页面 , 2015年7月1日22:46:19-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            background-image: url(../image/bg.jpg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        header {
+            display: -webkit-box;
+        }
+
+        .title {
+            -webkit-box-flex: 1;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+        }
+
+        .cancel {
+            background-image: url("../image/ad_close_gray@2x.png");
+            background-size: 40px;
+            background-repeat: no-repeat no-repeat;
+            background-position: center;
+        }
+
+        i {
+            display: block;
+            width: 30px;
+            height: 30px;
+            background-size: 30px;
+            background-repeat: no-repeat no-repeat;
+            background-position: center;
+        }
+
+        .user {
+            background-image: url("../image/login_account@2x.png");
+        }
+
+        .password {
+            background-image: url("../image/logn_password@2x.png");
+        }
+
+        .input-wrap {
+            padding: 10px 0;
+            display: -webkit-box;
+        }
+
+        .input-wrap:first-child {
+            border-bottom: 1px solid #d4d4d4;
+        }
+
+        .form {
+            background-color: rgba(255, 255, 255, 0.8);
+            margin: 40px 20px 0 20px;
+            border-radius: 8px;
+            padding: 0 10px;
+            line-height: 30px;
+        }
+
+        .input-wrap input {
+            display: block;
+            -webkit-box-flex: 1;
+            background-color: rgba(255, 255, 255, 0);
+            outline: none;
+            height: 30px;
+        }
+
+        .find-pwd {
+            text-align: right;
+            margin: 40px;
+        }
+
+        .button.green {
+            background-color: #36b05e;
+        }
+
+        .button {
+            display: block;
+            color: white;
+            margin: 0 40px;
+            text-align: center;
+            border-radius: 8px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .button.yellow {
+            background-color: #FF7800;
+        }
+
+        .margin-top-25 {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="btn cancel" tapmode="" onclick="api.closeWin()"></div>
+    <div class="title">初始化页面</div>
+    <div class="btn"></div>
+</header>
+<div class="content">
+    <div>如果显示此页面，说明从来没登录过</div>
+    <div class="button green" id="login" tapmode="" onclick="login()">登录 / 注册</div>
+    <div class="button yellow margin-top-25" tapmode="" onclick="help()">设置与帮助</div>
+    <div class="button yellow margin-top-25" tapmode="" onclick="feedback()">意见反馈</div>
+</div>
+<script src="../script/zepto.min.js"></script>
+
+
+
+
+
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+
+       
+            
+            
+    apiready = function () {
+    
+        //$api.rmStorage("user_info");
+        
+        //如果登录过了 就跳转到首页
+        //跳转到初始化页面，就是没登录的那个页面
+        var user_info = $api.getStorage('user_info');
+        var user_part = $api.getStorage('user_part'); //当前用户角色，是老师，还是同学 , 2015-7-10 23:05:33
+        
+        if (user_info) {
+        
+            api.alert({
+                msg:"已经登录过了"
+            })
+            
+            alert("win_init.html --> 153 user_part:"+user_part);
+            
+            if (user_part == "teacher" ) {
+            
+                //跳转到老师版
+                api.openSlidLayout({
+                    type: 'left',
+                    leftEdge: api.winWidth / 6.67,
+                    fixedPane: {
+                        name: 'win_homeFixed',
+                        url: 'win_homeFixed.html',
+                        bounces:false
+                    },
+                    slidPane: {
+                        name: 'win_homeSlider',
+                        url: 'win_homeSlider.html'
+                    }
+                }, function (ret) {
+    
+                });
+            
+            } else {
+                //跳转到学生版
+                api.openSlidLayout({
+                    type: 'left',
+                    leftEdge: api.winWidth / 6.67,
+                    fixedPane: {
+                        name: 'win_homeFixed',
+                        url: 'win_homeFixed.html',
+                        bounces:false
+                    },
+                    slidPane: {
+                        name: 'win_homeSlider',
+                        url: 'win_homeSlider.html'
+                    }
+                }, function (ret) {
+    
+                });
+            }
+            
+        };
+    }
+
+    
+    
+    function login(){
+        //api.alert({
+        //    msg:"跳转到登录页面"
+        //})
+        
+        api.openWin({
+                name: 'login',
+                url: 'win_login.html'
+        });
+    }
+    
+    
+    function help(){
+        api.alert({
+            msg:"跳转到帮助页面"
+        })
+        
+        
+    }
+    
+    function feedback(){
+        api.alert({
+            msg:"跳转到反馈页面"
+        })
+
+
+    }
+</script>
+
+
+
+
+</body>
+</html>

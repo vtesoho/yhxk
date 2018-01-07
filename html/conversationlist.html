@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html>
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+	<style>
+		#con{
+			margin:10px;
+			font-size: 28px; 
+		}
+		ul{
+			margin-bottom:10px;
+		}
+		.txt{ 
+			margin:5px 10px;
+			padding:5px;
+			color:#000;
+			word-wrap: break-word;
+		}
+	</style>
+	
+	
+	
+	
+    	
+    <script type="text/javascript" src="../script/jquery.mobile-1.4.4.min.js"></script>
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript">
+    
+    
+    /*rong全局*/
+    var rong;
+    
+    apiready = function() {
+        //var mytoken = $api.getStorage('token');//从本地获取我的token
+        var mytoken = '30Vc1PvMa55EaMn7MjVKyPaJutmuLXPZP+cSbsTUE1dp3KktCrOlbJxcjC71GlxstEllQbv4AV0Q53ijnKS7Xw==';
+        
+        //api.addEventListener 为处理上面第五步时的解决方案，当聊天窗口关闭时，该页面重新链接rongcloud，并加载监听最新消息事件
+        /* 先注释掉 , 2015年6月28日23:07:02
+        api.addEventListener({
+            name: 'reListen'
+        }, function(ret){
+            if(ret){
+                var value = ret.value;
+                if(value.status=='true'){
+                    var rong = api.require('rongCloud');
+                    rong.init(function(ret, err){
+                            //alert(ret.status);
+                    });
+                    rong.connect({
+                                token: mytoken
+                        },
+                        function(ret, err){
+                            }
+                    );
+                    rong.reconnect();
+                    newMessage();
+                }
+            }
+        });
+        */
+
+        //获取会话列表
+        getMessageList();            
+    };
+    
+        
+        
+        
+        
+    //获取会话列表
+    function getMessageList(){
+        
+        //var mytoken = $api.getStorage('token');
+        var mytoken = '30Vc1PvMa55EaMn7MjVKyPaJutmuLXPZP+cSbsTUE1dp3KktCrOlbJxcjC71GlxstEllQbv4AV0Q53ijnKS7Xw==';
+        
+        var rong = api.require('rongCloud');
+        rong.init(function(ret, err){        
+        });
+        rong.connect({
+                token: mytoken
+            },
+            function(ret, err){
+                if(ret.status=="success"){
+                    rong.getConversationList(function (ret, err) {
+                        //将获得的数据插入到容器中
+                        insertData(ret.result);
+                    })
+                };
+            }
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+    //插入数据
+    function insertData(data) {
+            
+            var msgData='';//初始化
+            //var myuserid = $api.getStorage('myuserid');//从本地数据获取我的用户ID，用来判断发送者是否为本地用户
+            var myuserid = "10000";
+            
+            for(var i in data){
+                    if(data[i].latestMessage.text && data[i].senderUserId){
+                            //两种情况，1当发送者等于本地用户时 2.当接收者等于本地用户时,只获取接受到的信息，不获取发送的信息
+                            if(data[i].senderUserId!=myuserid){
+                                    //当发送者不等于本地用户时
+                                    msgData += '<li id="messageBox_"'+data[i].senderUserId+'" uid="'+data[i].senderUserId+'" msgId="'+data[i].messageId+'">';
+                                    //头像
+                                    msgData += '<div class="message-useravatar"><img id="avatar_'+data[i].senderUserId+'" src="../image/imgloading.gif" width="60" height="60"/></div>';
+                                    msgData += '<div class="message-content">';
+                                    //昵称
+                                    msgData += '<p class="message-nickname">';
+                                    msgData += '<span class="message-time" id="messageTime_'+data[i].senderUserId+'">' + getDateDiff(data[i].receivedTime) + '</span>';
+                                    msgData += '<span id="nickname_'+data[i].senderUserId+'"></span>';
+                                    msgData += '</p>';
+                                    //内容
+                                    msgData += '<p id="messageText_'+data[i].senderUserId+'">' + data[i].latestMessage.text + '</p>';
+                                    msgData += '</div>';
+                                    msgData += '</li>';
+                            }
+                            
+                    }
+            }
+            $("#conversationList").append(msgData);
+            getUserInfos();//获取会话列表中用户的信息
+            newMessage();//我的监听最新消息事件是从这里开始的，当会话列表全部处理完成后再开始监听最新消息
+    }
+    
+    
+    
+    
+    
+    
+    //监听消息
+    function newMessage(mytoken){
+            
+            //var mytoken = $api.getStorage('token');
+            var mytoken = '30Vc1PvMa55EaMn7MjVKyPaJutmuLXPZP+cSbsTUE1dp3KktCrOlbJxcjC71GlxstEllQbv4AV0Q53ijnKS7Xw==';
+            
+            var rong = api.require('rongCloud');
+            rong.init(function(ret, err){
+                    //alert(ret.status);
+            });
+            rong.setOnReceiveMessageListener(function (ret, err) {
+                    insertNewData(ret.result.message);//写入信息消息
+            })
+            rong.connect({
+                        token: mytoken
+                },
+                function(ret, err){
+                    }
+            );
+    }
+    
+    
+    //插入新消息
+    function insertNewData(data){
+            
+            //var myuserid = $api.getStorage('myuserid');
+            var myuserid = "10000";
+            
+            var senderUserId = data.senderUserId;
+            //判断是否存在当前发送者的会话
+            var messageInfo = $("#messageBox_"+senderUserId);
+            if(messageInfo){
+                    //如果存在更新发送时间及内容
+                    var msgId = data.messageId;
+                    $("#messageTime_"+senderUserId).html(getDateDiff(data.sentTime));
+                    $("#messageText_"+senderUserId).html(data.content.text);
+            }else{
+                    //不存在插入
+                    var msgData = "";
+                    if(data.senderUserId!=myuserid){
+                            //当发送者不等于本地用户时
+                            msgData += '<li id="messageBox_"'+data.senderUserId+'" uid="'+data.senderUserId+'" msgId="'+data.messageId+'">';
+                            //头像
+                            msgData += '<div class="message-useravatar"><img id="avatar_'+data.senderUserId+'" src="../image/imgloading.gif" width="60" height="60"/></div>';
+                            msgData += '<div class="message-content">';
+                            //昵称
+                            msgData += '<p class="message-nickname">';
+                            msgData += '<span class="message-time" id="messageTime_'+data.senderUserId+'">' + getDateDiff(data.receivedTime) + '</span>';
+                            msgData += '<span id="nickname_'+data.senderUserId+'"></span>';
+                            msgData += '</p>';
+                            //内容
+                            msgData += '<p id="messageText_'+data.senderUserId+'">' + data.content.text + '</p>';
+                            msgData += '</div>';
+                            msgData += '</li>';
+                            $("#conversationList").prepend(msgData);
+                            getUserInfo(data.senderUserId);
+                    }
+            }
+    }
+    
+    
+    
+    
+    
+    
+    //聊天窗口打开
+    function chat(touserid) {
+            
+            //var mytoken = $api.getStorage('token');
+            var mytoken = '30Vc1PvMa55EaMn7MjVKyPaJutmuLXPZP+cSbsTUE1dp3KktCrOlbJxcjC71GlxstEllQbv4AV0Q53ijnKS7Xw==';
+            
+            var rong = api.require('rongCloud');
+            rong.init(function(ret, err){
+                    //alert(ret.status);
+            });
+            rong.connect({
+                        token: mytoken
+                },
+                function(ret, err){
+                
+                }
+            );
+            rong.disconnect(false);//注意这里为了处理第五点的不冲突，就绝情的把链接关闭了
+    
+            //打开聊天窗口，根据自己的实际情况来
+            api.openWin({
+                    name : 'chat',
+                    url : 'chat.html',
+                    pageParam : {
+                            touserid : touserid
+                    },
+                    vScrollBarEnabled : false
+            });
+    }
+
+    
+    
+    
+    
+    //下面为获取用户信息及处理时间戳的函数
+    function getUserInfo(uid){
+            var i = 0,data = {};
+            data[0] = uid;
+            $.post(url,{data:data},function(result){
+                    if(result){
+                            for(var d in result){
+                                    $("#avatar_"+result[d].userid).attr("src",result[d].avatar);
+                                    $("#nickname_"+result[d].userid).html(result[d].nickname);
+                            }
+                    }
+                    
+            },'json');        
+    }
+
+
+
+
+    function getUserInfos(){
+            var i = 0,data = {};
+            $("#conversationList li").each(function(){
+                    var t = $(this);
+                    data[i] = t.attr("uid");
+                    i++;
+            })
+            $.post(url,{data:data},function(result){
+                    if(result){
+                            for(var d in result){
+                                    $("#avatar_"+result[d].userid).attr("src",result[d].avatar);
+                                    $("#nickname_"+result[d].userid).html(result[d].nickname);
+                            }
+                    }
+                    
+            },'json');        
+    }
+    
+    
+    
+    
+    //处理时间戳
+    function getDateDiff(dateTimeStamp){
+            var minute = 1000 * 60;
+            var hour = minute * 60;
+            var day = hour * 24;
+            var halfamonth = day * 15;
+            var month = day * 30;
+            var now = new Date().getTime();
+            var diffValue = now - dateTimeStamp;
+            if(diffValue < 0){
+                    //若日期不符则弹出窗口告之
+                    //alert("结束日期不能小于开始日期！");
+            }
+            var monthC =diffValue/month;
+            var weekC =diffValue/(7*day);
+            var dayC =diffValue/day;
+            var hourC =diffValue/hour;
+            var minC =diffValue/minute;
+            if(monthC>=1){
+                    result= parseInt(monthC) + "个月前";
+            }else if(weekC>=1){
+                    result=parseInt(weekC) + "周前";
+            }else if(dayC>=1){
+                    result=parseInt(dayC) +"天前";
+            }else if(hourC>=1){
+                    result= parseInt(hourC) +"个小时前";
+            }else if(minC>=1){
+                    result=parseInt(minC) +"分钟前";
+            }else{
+                    result="刚刚";
+            }
+            return result;
+    }
+
+
+
+
+/*
+
+后面的时候再讲聊天窗口打开和关闭时的处理，其实也比较简单
+打开的时候重新连接一下融云     reconnect
+关闭的时候disconnect一下，然后发送一个事件  sendEvent
+var mytoken = $api.getStorage('token');
+var rong = api.require('rongCloud');
+rong.init(function(ret, err){
+        //alert(ret.status);
+});
+rong.connect({
+            token: mytoken
+    },
+    function(ret, err){
+        }
+);
+rong.disconnect(false); 
+api.sendEvent({
+    name: 'reListen',//注意这个要跟会话列表页的对应
+    extra:{status:'true'}
+});
+api.closeWin(
+);
+
+
+*/
+
+
+
+    </script>
+
+
+</head>
+
+
+
+
+
+
+
+
+<body>
+    <div id="conversationList"></div>
+</body>
+
+
+
+
+
+
+
+</html>

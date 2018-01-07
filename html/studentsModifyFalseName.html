@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+    body {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+    }
+
+    .content {
+        -webkit-box-flex: 1;
+    }
+    
+    .header
+    {
+     background-color:  #F5F5F5
+    }
+
+</style>
+<body>
+<header>
+    <div class="header">
+        <div class="back btn" tapmode="" onclick="api.closeWin()"></div>
+        <div class="title" id="title">修改昵称</div>
+    </div>
+</header>
+<div class="content">
+</div>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+        fixIos7Bar($("header"));
+        var $bodyH = $("body").height();
+        var $headerH = $("header").height();
+        var $footerH = $("footer").height();
+        var $contentH = $bodyH - $headerH - $footerH;
+        api.openFrame({
+            name: 'studentsModifyFalseNameContent',
+            url: 'studentsModifyFalseNameContent.html',
+            rect: {
+                x: 0,
+                y: $headerH,
+                w: 'auto',
+                h: $contentH
+            },
+            bgColor: '#E5E5E5'
+        })
+    }
+    function bell() {
+        api.toast({msg: '订阅成功', location: 'top'})
+    }
+</script>
+</body>
+</html>

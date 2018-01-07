@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        body {
+            background-color: #fff;
+            padding: 10px 5px;
+        }
+		
+		#wrap{
+			margin: 0 auto;
+			padding:5px;
+		}
+		
+		#wrap ul{
+			display:block;
+			list-style: none;
+		}
+		#wrap ul li{
+			width:100%;
+			min-height:30px;
+			border-bottom: 1px solid ##CCCCCC;
+		}
+		.left {
+			float: left;
+			min-width: 50px;
+		}
+		.right{
+			float: left;
+		}
+		
+		.red{
+			color:red;
+		}
+		.right > span:nth(0){
+			
+		}
+    </style>
+</head>
+<body>
+<div id="wrap">
+	<ul>
+		<li>
+			<div class="item">
+				<div class="left"><img src="../image/teacher_red_love_icon.png"/></div>
+				<div class="right">
+					<div><span class="red">优秀</span><span>13868881888</span><span>2015.7.2 15:02:32</span></div>
+					<div><span>非常棒的学生！！！</span></div>	
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<script type="text/javascript" src="../script/api.js"></script>		
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+//      api.setRefreshHeaderInfo({
+//          visible: true,
+//          bgColor: '#E5E5E5',
+//          textColor: '#fff',
+//          textDown: '下拉刷新...',
+//          textUp: '松开刷新...',
+//          showTime: true
+//      }, function (ret, err) {
+//          api.refreshHeaderLoadDone();
+//      });
+//		var $issueHeader=$api.byId('issue_header');
+//		var $body=$api.dom('body');
+//		var body_h=$api.offset($body).h;
+//		alert("body:"+body_h);
+//      var issue_h = $api.offset($issueHeader).h;
+//      var header_h=$api.getStorage('header_h');
+//      alert("h1"+header_h);
+//      var footer_h=$api.getStorage('footer_h');
+//  
+//      var content_h = body_h - issue_h;
+//     
+//      api.openFrame({
+//	        name: 'teacher_issue_list',
+//	        url: 'frm_teacher_issues_content.html',
+//	        bounces: false,
+//	        rect: {
+//		        x:0,
+//		        y:issue_h+header_h,
+//		        w:'auto',
+//		        h:'auto'
+//	        }
+//      });  
+    };
+    
+    function checkReviews(type){
+    	alert(type);
+    }
+</script>
+</body>
+</html>

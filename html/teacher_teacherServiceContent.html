@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #FFFFFF;
+    font-weight: lighter
+}
+
+img {
+    width: 100%;
+}
+
+.answerInfo
+{
+   margin-top: 15px;
+}
+
+.answerInfo div:first-child
+{
+   padding-left: 15px;
+}
+
+.answerSet
+{
+   margin:15px 15px 15px 15px;
+   border:1px solid #d8d8d8;
+   padding-left: 10px;
+   padding-top: 10px;
+   
+}
+
+.answerSet div:first-child
+{
+   border-bottom: 1px solid #d8d8d8;
+   
+}
+
+.priceMsg div
+{
+    background-color: #777777;
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-bottom: 40px;
+    
+}
+
+.priceMsg div span:first-child
+{
+    background-color: #FFFFFF;
+    border: 2px solid #777777;
+    width: 90%;
+}
+
+.priceMsg div span:last-child
+{
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 12px solid #FFFFFF;
+}
+
+</style>
+
+<body>
+<input type="text" name="userName" id="userName" value="zhangyi"/>
+<div class="answerInfo">
+   <div>答题服务</div>
+   <div class="answerSet">
+      <div>在线授课</div>
+      <div onclick="getPriceInfo()" class="priceMsg">
+          <div><span><button id="priceNumber" name="priceNumber">3元/题</button></span><span></span></div>
+      </div>
+   </div>
+   
+   <div id="priceInfo" name="priceInfo"></div>
+    
+</div>
+</body>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+    var frameName = api.frameName;
+    alert(frameName);
+    };
+    function getPriceInfo()
+    {
+       var userName=document.getElementById("userName").value;
+       alert(userName); 
+       alert("获取更多的用户信息");
+       var arrayTitle = new Array();
+	   arrayTitle[0]='1元/题';
+	   arrayTitle[1]='2元/题';
+	   arrayTitle[2]='3元/题';
+	   arrayTitle[3]='4元/题';
+	   arrayTitle[4]='5元/题';
+	   arrayTitle[5]='6元/题';
+	   var obj = api.require('multiSelector');
+       obj.open
+       ({
+         content:arrayTitle
+        },function(ret,err)
+        {
+	        var selectObj="";
+	        for (var index in ret.selectAry)
+	        {
+	             selectObj = selectObj + ","+ret.selectAry[index];
+	        }
+	        alert("test:"+selectObj.indexOf(","));
+	        if(selectObj.indexOf(",")==-1)
+	        {
+	            alert("请选择数据!");
+	            return false;
+	        } 
+	        else
+	        {
+	           if(selectObj.indexOf(",")==0)
+		       {
+		           selectObj=selectObj.substring(1,selectObj.length);
+		       }
+		       if(selectObj.indexOf(",")!=-1)
+		       {
+		            alert("请只选择一条数据!");
+		            return false;
+		       }
+		       document.getElementById("priceNumber").textContent=selectObj;
+		       api.alert({msg:'选择器选取的数据是'+ selectObj});
+	        }
+      });
+    }
+    
+</script>
+</html>

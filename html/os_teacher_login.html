@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="" />
+		<title></title>
+		 <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		 
+		 <style>
+		 	html body{
+		 		background-color: #00A1E9;
+		 	}
+		 	
+		 	#header{
+		 		height: 25%;
+		 	}
+		 	
+		 	#content{
+		 		background-color: #FFFFFF;
+		 	}
+		 	
+		 	#footer{
+		 		height: 12%;
+		 		
+		 	}
+		 	
+		 	#footer-line{
+		 		border: 1px solid #007FCE;
+		 	}
+		 </style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">fdsaf</div>
+			<div id="content">fdsafds</div>
+			
+			<hr id="footer-line"/>
+			<div id="footer">fdsafdsa</div>
+		</div>
+	</body> 
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+
+
+
+apiready = function () {
+alert("test");
+    api.setStatusBarStyle({
+        style: 'dark'
+    });
+    $api.fixIos7Bar($api.dom('nav'));
+    var obj = api.require('mediaScanner');
+	alert(obj);
+    
+};
+</script>
+</html>

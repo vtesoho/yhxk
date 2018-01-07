@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+    <style>
+        html, body {
+            background-color: #dfdede !important;
+        }
+
+        li {
+            position: relative;
+            padding: 3px 10px;
+            border-bottom: 1px solid #d4d3d3;
+            background-size: 10px;
+            background-repeat: no-repeat;
+            background-position: 78%;
+        }
+
+        li:first-child {
+            height: 46px;
+            display: -webkit-box;
+            -webkit-box-align: center;
+        }
+
+        .liActive {
+            background-color: #3ABA63;
+        }
+
+        li a {
+            display: block;
+            padding: 10px 30px;
+            background-size: 20px;
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+    </style>
+</head>
+<body>
+<nav>
+	<div id="pinfo">
+		
+	</div>
+	<div>
+		<ul>
+	        <li tapmode="liActive" onclick=""><a class="home active">个人信息/a></li>
+	        <li tapmode="liActive" onclick=""><a class="my">我的提问</a></li>
+	        <li class="arrowD " tapmode="liActive" onclick="">我的关注<a class="nearby">频道2</a></li>
+	        <li class="arrowD" tapmode="liActive" onclick="">账户余额<a class="domestic">频道3</a></li>
+	        <li tapmode="liActive" onclick=""><a class="maldives">客户反馈</a></li>
+	        <li tapmode="liActive" onclick=""><a class="Europe">设置帮助</a></li>
+    	</ul>
+	</div>
+    
+</nav>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+apiready = function () {
+    api.setStatusBarStyle({
+        style: 'dark'
+    });
+    $api.fixIos7Bar($api.dom('nav'));
+};
+</script>
+</html>

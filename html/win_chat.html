@@ -1,0 +1,271 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<title>api</title> 
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.4.min.css" />
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.mobile-1.4.4.min.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+/*
+
+    var rong = api.require('rongCloud');
+
+    rong.init(function(ret, err){
+        if (ret.status == 'error')
+            api.toast({ msg: err.code });
+    });
+
+
+    rong.connect({
+        token: '30Vc1PvMa55EaMn7MjVKyPaJutmuLXPZP+cSbsTUE1dp3KktCrOlbJxcjC71GlxstEllQbv4AV0Q53ijnKS7Xw=='},
+        function(ret, err){
+            if (ret.status == 'success') {
+                api.toast({ msg: ret.result.userId });
+            } else {
+                alert("55-->"+err);
+            }
+            
+    });
+
+
+*/
+
+
+
+    var touserid = null; //好友ID全局
+    apiready = function(){
+    
+        touserid = api.pageParam.touserid;//好友用户ID
+        //var mytoken = $api.getStorage('token');//我的token
+        
+        touserid = "10000";
+        var mytoken = '30Vc1PvMa55EaMn7MjVKyPaJutmuLXPZP+cSbsTUE1dp3KktCrOlbJxcjC71GlxstEllQbv4AV0Q53ijnKS7Xw==';
+        getMessage(mytoken);//获取最新消息，后面会有专门介绍
+        
+        //引入chatbox
+        var chatBox = api.require('chatBox');
+        var sourcePath = "widget://image/emotion";//表情存放目录
+        var emotionData;//存储表情
+
+        getImgsPaths(sourcePath, function (emotion) {
+                emotionData = emotion;
+        })
+        
+        chatBox.open({
+                //按钮类，图片URL就根据实际情况来
+                switchButton:{
+                faceNormal:"widget://image/chatBox_face1.png",
+                faceHighlight:"widget://image/chatBox_face1.png",
+                addNormal: "widget://image/chatBox_add1.png",
+                addHighlight: "widget://image/chatBox_add1.png",
+                keyboardNormal: "widget://image/chatBox_key1.png",
+                keyboardHighlight: "widget://image/chatBox_key1.png"
+            },
+            sourcePath: sourcePath
+        },function(ret,err){
+                /*
+                *1.用户输入文字或表情
+                */
+                /*用户输入表情或文字*/
+                /*使用读文件方法，读json*/
+                var sendMsg = transText(ret.msg);
+                //发送消息
+                sendMessage(mytoken,sendMsg);//发送消息的函数，后面会有介绍
+                /*将文字中的表情符号翻译成图片，并可自定义图片尺寸*/
+                function transText(text, imgWidth, imgHeight){
+                        var imgWidth = imgWidth || 30;
+                        var imgHeight = imgHeight || 30;
+                        var regx = /\[(.*?)\]/gm;
+                        var textTransed = text.replace(regx,function(match){
+                                var imgSrc = emotionData[match];
+                                if(!imgSrc){
+                                        //说明不对应任何表情，直接返回
+                                        return match;
+                                }
+                                var img = "<img src="+imgSrc+" width="+imgWidth+" height="+imgHeight+">";
+                                return img;
+                        });
+                        return textTransed;
+                }
+        });
+    }
+    
+    
+    
+    /*一个工具方法：可以获取所有表情图片的名称和真实URL地址，以JSON对象形式返回。其中以表情文本为 属性名，以图片真实路径为属性值*/
+    function getImgsPaths(sourcePathOfChatBox, callback){
+            var jsonPath = sourcePathOfChatBox + "/emotion.json";//表情的JSON数组
+            api.readFile({
+                    path: jsonPath
+            },function(ret,err){
+                    if(ret.status){
+                            var emotionArray = JSON.parse(ret.data);
+                            var emotion = {};
+                            for(var idx in emotionArray){
+                                    var emotionItem = emotionArray[idx];
+                                    var emotionText = emotionItem["text"];
+                                    var emotionUrl = "../image/emotion/"+emotionItem["name"]+".png";
+                                    emotion[emotionText] = emotionUrl;
+                            }
+                            /*把emotion对象 回调出去*/
+                            if("function" === typeof(callback)){
+                                    callback(emotion);
+                            }
+                    }
+            });
+    }
+        
+    
+    
+    //发送消息
+    function sendMessage(mytoken,content){
+            var rong = api.require('rongCloud');
+            rong.init();//初始化
+            rong.connect({
+                        token: mytoken//我的token
+                },
+                function(ret, err){
+                            if(ret.status=="success"){
+                                    rong.sendTextMessage({
+                                            conversationType: 'PRIVATE',//类型
+                                            targetId: touserid,//好友ID，因为是设置了全局，所以直接拿来使用了
+                                            text: content,//消息内容
+                                            extra: ''
+                                        }, function (ret, err) {
+                                            if (ret.status == 'prepare'){
+                                                    //准备发送
+                                                    $("#messageList").append('<div class="sender"><div class="sender-avatar"><img src="http://www.qinghuwai.com/uploadfile/member/1/avatar/1.jpg"></div><div class="sender-cont"><div class="right_triangle"></div><span>'+ret.result.message.content.text+'</span><div id="status_'+ret.result.message.messageId+'" class="status">准备发送时的状态，可以加载一张loading图片</div></div></div>');
+                                            }else if (ret.status == 'success'){
+                                                    //发送成功后移除loading
+                                                    $("#status_"+ret.result.message.messageId).remove();
+                                            }else if (ret.status == 'error'){
+                                                    //发送失败后的护理，一般讲loading图片变为 “！”；
+                                                    $("#status_"+ret.result.message.messageId).html("!");
+                                            }    
+                                        }
+                                    );
+                            };
+                    }
+            );
+            
+    }
+
+
+
+
+    //接受消息
+    function getMessage(mytoken){
+            var rong = api.require('rongCloud');
+            rong.init();
+            rong.setOnReceiveMessageListener(function (ret, err) {                if(ret.result.message.targetId==touserid){
+                        $("#messageList").append('<div class="receiver"><div class="receiver-avatar"><img src="http://www.qinghuwai.com/uploadfile/member/6/avatar/6.jpg"></div><div class="receiver-cont"><div class="left_triangle"></div><span>'+ret.result.message.content.text+'</span></div></div>');
+                     }
+            })
+            rong.connect({
+                        token: mytoken
+                },
+                function(ret, err){}
+            );
+    }
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+<style>
+ /*会话消息容器*/
+#messageList { padding: 15px 0; overflow: hidden;}
+/*接收消息类，左侧*/
+.receiver{ clear:both;}
+.receiver .receiver-avatar{float: left;}        
+.receiver .receiver-avatar img { width: 50px; height: 50px;}
+.receiver .receiver-cont{background-color: #faff72; float: left;margin: 0 20px 10px 15px; padding: 10px; border-radius:7px; max-width: 60%; position: relative;}
+.receiver .status { width: 30px; height: 30px; position: absolute; right: -35px; top: 3px;}
+/*发送消息类，右侧*/
+.sender{clear:both;}
+.sender .status { width: 30px; height: 30px; position: absolute; left: -35px; top: 3px; font-size: 18px; font-weight: 700; color: #990000;}
+.sender .status img { width: 30px; height: 30px;}
+.sender .sender-avatar{float: right;}
+.sender .sender-avatar img { width: 50px; height: 50px;}
+.sender .sender-cont{float:right; background-color: #15b5e9; margin: 0 10px 10px 20px; padding: 10px; border-radius:7px; color: #ffffff; max-width: 60%; position: relative;}
+.left_triangle{ height:0px; width:0px; border-width:8px; border-style:solid; border-color:transparent #faff72 transparent transparent; position: absolute; left:-16px; top:6px; }
+.right_triangle{ height:0px; width:0px; border-width:8px; border-style:solid; border-color:transparent transparent transparent #15b5e9; position: absolute; right:-16px; top:6px;}
+</style>
+    
+    
+</head>
+<body>
+    <div data-role="page">
+    
+    
+        <div data-role="header">
+            <a data-role="button" onclick="api.closeWin()" data-icon="Back">返回</a>
+            <h1>api</h1>            
+        </div><!-- /header -->
+        
+        
+        
+        
+        
+        <div data-role="content">
+  
+            <div id="messageList">
+                <div class="sender">
+                        <div class="sender-avatar">
+                                <img src="chatTemplateExample2_files/cat.jpg">
+                        </div>
+                        <div class="sender-cont">
+                                <div class="right_triangle"></div>
+                                <span><img src="发送用户头像" width="30" height="30">发送内容</span>
+                                <div class="status"><!--发送状态--></div>
+                        </div>
+                
+                </div>
+                <div class="receiver">
+                        <div class="receiver-avatar">
+                                <img src="对方用户头像">
+                        </div>
+                        <div class="receiver-cont">
+                                <div class="left_triangle"></div>
+                                <span>发送内容</span>
+                        </div>
+                </div>
+            </div>
+        </div><!-- /content -->
+        
+        
+        
+        
+        <div data-role="footer">
+            <h4>/html/im.html</h4>
+        </div><!-- /footer -->
+        
+        
+    </div><!-- /page -->
+    
+    
+
+
+
+
+
+</body>
+</html>

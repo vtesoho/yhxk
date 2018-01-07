@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #F5F5F5;
+    font-weight: lighter
+}
+img {
+    width: 100%;
+}
+
+.teacherInfo
+{
+   display: -webkit-box;
+   -webkit-box-pack: center;
+   -webkit-box-align: center;
+    overflow:hidden;
+   background-color: #FFFFFF;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   border-top: 1px solid  #C0C0C0;
+   border-bottom: 1px solid #C0C0C0;
+  
+}
+
+.ordernumber,.attentionnumber,.erWeiCode
+{
+   color: red;
+   padding-top: 10px;
+}
+
+.orderNumberInfo,.attentionNumberInfo
+{
+   padding-left: 15px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-right: 15px;
+   border-right: 1px solid  #C0C0C0;
+   width:25%;
+   text-align: center
+}
+ .erWeiCodeInfo 
+ {
+   padding-left: 10px;
+   padding-top: 10px;
+   padding-right: 20px;
+   margin-right:10px;
+   width:30%;
+   text-align: center
+ }
+ 
+ .arrow-right {
+    background-image: url("../image/arrow_grey_right_normal.png");
+    background-position: right center;
+    background-repeat: no-repeat no-repeat;
+    background-size: 20px;
+    border-bottom: 1px solid #d8d8d8;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    background-color: #FFFFFF
+}
+
+.erWeiCodeInfo img
+{
+   width:40px;
+   height: 35px;
+}
+
+</style>
+<body>
+<div class="teacherInfo">
+    <div class="orderNumberInfo" >
+        <span>订单</span>
+        <br />
+        <span class="ordernumber" onclick="getOrderInfo()">236</span>
+    </div>
+    <div class="attentionNumberInfo">
+        <span>关注</span>
+        <br />
+        <span class="attentionnumber" onclick="getAttentionInfo()">88</span>
+    </div>
+    <div class="erWeiCodeInfo">
+        <span>二维码名片</span>
+        <br />
+        <img src="../image/erWeiCode.jpg" onclick="geterWeiCodeInfo()"/>
+    </div>
+</div>
+<div class="showHelpSet">
+    <ul>
+        <li class="arrow-right" onclick="myService()">
+                             我的服务
+        </li>
+         <li class="arrow-right" onclick="myPayAccounts()">
+                             收入结算
+        </li>
+        <li class="arrow-right" onclick="mySetting()">
+                             我的设置
+        </li>
+    </ul>
+</div>
+	
+
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function ()
+     {
+    };
+    function getOrderInfo()
+    {
+       alert("获取订单信息");
+       api.openWin({
+            name: "teacher_teacherOrderInfo",
+            url: 'teacher_teacherOrderInfo.html'
+        })
+    }
+    
+     function getAttentionInfo()
+    {
+       alert("获取关注信息");
+       api.openWin({
+            name: "teacher_teacherAttentionInfo",
+            url: 'teacher_teacherAttentionInfo.html'
+        })
+    }
+    
+    function geterWeiCodeInfo()
+    {
+       var scanner = api.require('scanner');
+        scanner.open(function(ret,err)
+        {
+            alert(ret.msg);
+            if(ret)
+            {
+                api.openWin({
+                   name: "WeiCodeInfo",
+                   url: ret.msg
+                })
+            }
+            else
+            {
+               alert("扫描失败！");
+            }
+        });
+    }
+    
+       function myService()
+    {
+       alert("我的服务");
+       api.openWin({
+            name: "teacher_teacherService",
+            url: 'teacher_teacherService.html'
+        })
+    }
+    function myPayAccounts()
+    {
+       alert("我的结算");
+       api.openWin({
+            name: "teacher_teacherAccounts",
+            url: 'teacher_teacherAccounts.html'
+        })
+    }
+    
+          function mySetting()
+    {
+       alert("我的设置");
+       api.openWin({
+            name: "studentsSetHelpMessage",
+            url: 'studentsSetHelpMessage.html'
+        })
+    }
+    
+</script>
+</html>

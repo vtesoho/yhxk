@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        body {
+            background-color: #E5E5E5;
+            padding: 10px 5px;
+        }
+		.issue_header{
+			width:80% auto;
+		}
+       
+    </style>
+</head>
+<body>
+	<nav>
+		<div id="issue_header" class="issue_header">
+			<span>未回复</span>
+			<span>全部</span>
+			<span>已回复</span>
+		</div>
+	</nav>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+        api.setRefreshHeaderInfo({
+            visible: true,
+            bgColor: '#E5E5E5',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function (ret, err) {
+            api.refreshHeaderLoadDone();
+        });
+    };
+    
+</script>
+</body>
+</html>

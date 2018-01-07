@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+</head>
+<style>
+body, html {
+    height: auto;
+    background-color: #FFFFFF;
+    font-weight: lighter
+}
+
+img {
+    width: 100%;
+}
+
+.showMessage ul li
+{
+  padding-left:15px;
+  padding-top:10px;
+  padding-bottom:10px;
+  border-bottom:1px solid #d8d8d8;
+}
+.secondSpan
+{
+  font-size: 12px;
+}
+</style>
+
+<body>
+<div class="showMessage">
+    <ul>
+        <li onclick="getMoreMessage()">
+            <span >何子月回答了你的问题!</span>
+            <br />
+            <span class="secondSpan">在线教学 -5分钟前前（未读）</span>
+        </li>
+        <li "getMoreMessage()">
+            <span>何子月回答了你的问题！</span>
+            <br />
+            <span class="secondSpan">在线教学 -5分钟前前（未读）</span>
+        </li>
+    </ul>
+</div>
+</body>
+<script src="../script/zepto.min.js"></script>
+<script>
+    apiready = function () {
+    };
+    function getMoreMessage()
+    {
+       alert("获取更多的用户信息");
+    }
+</script>
+</html>

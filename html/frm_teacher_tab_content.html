@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        html, body {
+            background-color: transparent;
+            font-size: 14px;
+            height: 100%;
+        }
+        .content{
+            width: 100%;
+            overflow: hidden;
+        }
+        .tab-content {
+            display: -webkit-box;
+            width: 300%;
+            background: #FFFFFF;
+            border-top: 1px solid #DBDBDB;
+        }
+
+        .tab-content ul {
+            width: 33.33%;
+        }
+
+        .tab-content li {
+            padding: 10px 0;
+            margin: 0 10px;
+            border-bottom: 1px solid #DBDBDB;
+        }
+    </style>
+</head>
+<body onclick="closeFrame()" tapmode="">
+<div class="content">
+    <div class="tab-content">
+        <ul>
+            <li>选择科目</li>
+            <li>语文</li>
+            <li>数学</li>
+            <li>英语</li>
+        </ul>
+        <ul>
+            <li>选择年级</li>
+            <li>初中一年级</li>
+            <li>初中二年级</li>
+            <li>初中三年级</li>
+        </ul>
+        <ul>
+            <li>智能排序</li>
+            <li>推荐指数</li>
+            <li>满意度</li>
+        </ul>
+    </div>
+</div>
+<script>
+    function slider(index){
+        var x=-$(window).width()*index+'px';
+        $(".tab-content").css({'-webkit-transform':'translate('+x+')'/*,'-webkit-transition':'500ms linear' 滑动效果*/} )
+    }
+    
+    function closeFrame() {
+        api.execScript({frameName: 'frm_teacher_tab', script: 'closeFrameGroup()'})
+    }
+</script>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+</html>
